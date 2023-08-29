@@ -19,12 +19,12 @@ let __defaultOptions = {
     onComplete: null,
     onEnd: null,
     startOnSelect: true,
-    extensions: ['jpeg', 'jpg', 'png', 'gif'],
-    multiple: false,
+    extensions: ['jpeg', 'jpg', 'png', 'gif', 'txt', 'csv', 'rtf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'],
+    multiple: true,
     sendAsMultipart: true,
-    maxFilesSelect: 4,
+    maxFilesSelect: 0,
     maxFilesInProgress: 2,
-    maxSizePerFile: 1024 * 1024 * 2, // MB
+    maxSizePerFile: 1024 * 1024 * 10, // MB
     maxFilesSelectMsg: 'Max of {max} files can be selected at a time.',
     maxFileSizeMsg: 'Max of {max} mb per file.',
     invalidExtensionMsg: 'File must be one of {extensions}.',
@@ -85,7 +85,6 @@ function _create(name) {
 
         meta: {
             state: 'ready',
-
             percentComplete: 0
         },
 
@@ -370,7 +369,7 @@ function _select(files) {
     let i, ii,
         _this = this;
 
-    if (files.length > this.options.maxFilesSelect) {
+    if ((this.options.maxFilesSelect > 0) && (files.length > this.options.maxFilesSelect)) {
 
         // Trigger on select with files and error.
         this.onSelect(files, {
