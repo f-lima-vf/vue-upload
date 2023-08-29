@@ -1,6 +1,6 @@
-var __upload = null;
+let __upload = null;
 
-var __defaultOptions = {
+let __defaultOptions = {
     url: null,
     preFetchUrl: false,
     name: 'file',
@@ -43,7 +43,7 @@ function __randomId() {
 }
 
 function __parseErrors(res) {
-    if (res && res.data) {
+    if (res?.data) {
         if (res.data.errors) {
             return res.data.errors[0] || {};
         }
@@ -102,7 +102,7 @@ function _create(name) {
 }
 
 function _reset() {
-    var i, ii,
+    let i, ii,
         _this = this;
 
     for (i = 0, ii = this.$vm.files.all.length; i < ii; i++) {
@@ -130,7 +130,7 @@ function _reset() {
 }
 
 function _init(name, options) {
-    var instance = __upload.state.instances[name];
+    let instance = __upload.state.instances[name];
 
     instance.options = Object.assign({}, __upload.$options, options);
 
@@ -159,15 +159,12 @@ function _option(key, val) {
     
     if (key === 'dropzone') {
         _destroyDropzone.call(this);
-
         this.dropzone = _initDropzone.call(this);
-
-        return;
     }
 }
 
 function _destroy(name) {
-    var instance = __upload.state.instances[name];
+    let instance = __upload.state.instances[name];
 
     _destroyInput.call(instance);
 
@@ -179,7 +176,7 @@ function _destroy(name) {
 }
 
 function _initInput() {
-    var input,
+    let input,
         _this = this;
 
     input = document.createElement('input');
@@ -206,18 +203,14 @@ function _initInput() {
 }
 
 function _destroyInput() {
-    if (
-        this.input &&
-        this.input.$el
-    ) {
+    if (this.input?.$el) {
         this.input.$el.parentNode.removeChild(this.input.$el);
-
         this.input.$el = null;
     }
 }
 
 function _initDropzone() {
-    var dropzone,
+    let dropzone,
         _this = this;
         
     dropzone = {
@@ -314,7 +307,7 @@ function _addError(error) {
 }
 
 function _clearError(error) {
-    var i, ii;
+    let i, ii;
 
     if (!error) {
         return;
@@ -330,7 +323,7 @@ function _clearError(error) {
 }
 
 function _clearFile(file) {
-    var i, ii,
+    let i, ii,
         index;
 
     if (!file) {
@@ -360,7 +353,7 @@ function _clearFile(file) {
 }
 
 function _getFilePreview(file, cb) {
-    var reader  = new FileReader();
+    let reader  = new FileReader();
 
     reader.addEventListener('load', function () {
         file.$raw = reader.result;
@@ -374,7 +367,7 @@ function _getFilePreview(file, cb) {
 }
 
 function _select(files) {
-    var i, ii,
+    let i, ii,
         _this = this;
 
     if (files.length > this.options.maxFilesSelect) {
@@ -402,7 +395,7 @@ function _select(files) {
 }
 
 function _queue(file) {
-    var _this = this,
+    let _this = this,
         type,
         name,
         extension;
@@ -411,7 +404,7 @@ function _queue(file) {
     type = (file.type || '').split('/');
 
     extension = name.length > 1 ? name[name.length - 1] : null;
-    extension = extension ? extension : (type[1] || null);
+    extension = extension || (type[1] || null);
     extension = (extension || '').toLowerCase();
 
     type = type[0] || null;
@@ -453,7 +446,7 @@ function _queue(file) {
 }
 
 function _index(file, queue) {
-    var i, ii,
+    let i, ii,
         files;
 
     files = this.$vm.files[queue || file.state];
@@ -468,7 +461,7 @@ function _index(file, queue) {
 }
 
 function _move(file, queue) {
-    var index;
+    let index;
 
     index = _index.call(this, file);
 
@@ -480,7 +473,7 @@ function _move(file, queue) {
 }
 
 function _valid(file) {
-    var error;
+    let error;
 
     if (this.options.extensions && this.options.extensions.indexOf(file.extension) < 0) {
         error = {
@@ -508,7 +501,7 @@ function _valid(file) {
 }
 
 function _process() {
-    var i, ii,
+    let i, ii,
         file;
 
     if (this.$vm.files.progress.length >= this.options.maxFilesInProgress) {
@@ -560,7 +553,7 @@ function _process() {
 }
 
 function _upload(file) {
-    var key,
+    let key,
         request,
         _this = this;
 
@@ -580,7 +573,7 @@ function _upload(file) {
                     extension: file.extension
                 },
                 success: function (res) {
-                    var data = {};
+                    let data = {};
 
                     if (file.$instance.options.onPrefetchUrl) {
                         data = file.$instance.options.onPrefetchUrl(res) || {};
@@ -597,7 +590,7 @@ function _upload(file) {
         }
     })
     .then(function (data) {
-        var formData;
+        let formData;
 
         if (_this.options.sendAsMultipart === true) {
             formData = new FormData();
@@ -641,7 +634,7 @@ function _upload(file) {
             },
 
             error: function (res) {
-                var error;
+                let error;
 
                 file.sending = false;
 
@@ -664,7 +657,7 @@ function _upload(file) {
 }
 
 function _percent() {
-    var i, ii,
+    let i, ii,
         percentComplete,
         totalFilesActive;
 
@@ -746,7 +739,7 @@ Upload.prototype.files = function (name) {
 };
 
 Upload.prototype.file = function (name) {
-    var vm;
+    let vm;
 
     _create(name);
 
@@ -756,7 +749,8 @@ Upload.prototype.file = function (name) {
 };
 
 Upload.prototype.exists = function (name) {
-    return __upload.state.instances[name] ? true : false;
+    let ret = __upload.state.instances[name];
+    return ret ? true : false;
 }
 
 Upload.prototype.meta = function (name) {
@@ -766,7 +760,8 @@ Upload.prototype.meta = function (name) {
 }
 
 Upload.prototype.percent = function (name) {
-    _create(name);const authKey = 'auth';
+    _create(name);
+    // const authKey = 'auth';
 
     return __upload.state.instances[name].$vm.meta.percentComplete;
 }

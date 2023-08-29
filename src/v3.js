@@ -1,5 +1,4 @@
-import {inject  } from 'vue';
-import {reactive} from 'vue';
+import { inject, reactive } from 'vue';
 import Upload     from './upload.js';
 
 const uploadKey = 'upload';
@@ -7,7 +6,7 @@ const uploadKey = 'upload';
 // NOTE: Create pseudo Vue object for Vue 2 backwards compatibility.
 
 function Vue (obj) {
-    var data = obj.data();
+    let data = obj.data();
 
     this.state = reactive(data.state);
 }
@@ -31,5 +30,5 @@ export function createUpload(options) {
 }
 
 export function useUpload(key) {
-    return inject(key ? key : uploadKey);
+    return inject(key || uploadKey);
 }
